@@ -1,0 +1,42 @@
+{
+  "app-id": "io.github.yemresolenci.CosmicSystemdManager",
+  "runtime": "org.freedesktop.Platform",
+  "runtime-version": "24.08",
+  "sdk": "org.freedesktop.Sdk",
+  "sdk-extensions": [
+    "org.freedesktop.Sdk.Extension.rust-stable"
+  ],
+  "command": "cosmic-systemd-applet",
+  "finish-args": [
+    "--socket=wayland",
+    "--socket=fallback-x11",
+    "--share=ipc",
+    "--system-talk-name=org.freedesktop.systemd1",
+    "--filesystem=xdg-config/CosmicSystemdManager:create"
+  ],
+  "build-options": {
+    "append-path": "/usr/lib/sdk/rust-stable/bin",
+    "env": {
+      "CARGO_HOME": "/run/build/cargo"
+    }
+  },
+  "modules": [
+    {
+      "name": "cosmic-systemd-applet",
+      "buildsystem": "simple",
+      "build-commands": [
+        "cargo --offline build --release --verbose",
+        "just rootdir=/app prefix= install"
+      ],
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://github.com/yemreSolenci/cosmic-systemd-manager.git",
+          "tag": "v0.1.0",
+          "commit": "875b2416f4dfe07092ab60183f7f232b938350fa"
+        },
+        "cargo-sources.json"
+      ]
+    }
+  ]
+}
