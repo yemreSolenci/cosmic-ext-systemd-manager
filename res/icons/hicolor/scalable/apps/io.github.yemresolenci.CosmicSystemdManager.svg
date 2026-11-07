@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3a4454"/>
+      <stop offset="100%" stop-color="#1e2430"/>
+    </linearGradient>
+    <linearGradient id="gear" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#48b9c7"/>
+      <stop offset="100%" stop-color="#2d8c99"/>
+    </linearGradient>
+    <linearGradient id="bolt" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffb834"/>
+      <stop offset="100%" stop-color="#f58220"/>
+    </linearGradient>
+  </defs>
+  <!-- Background rounded squircle -->
+  <rect width="116" height="116" x="6" y="6" rx="26" fill="url(#bg)"/>
+  <!-- Gear cog silhouette -->
+  <g fill="url(#gear)" transform="translate(64,64)">
+    <path d="M -11,-48 L 11,-48 L 13,-36 C 18,-34 23,-31 27,-27 L 38,-33 L 53,-18 L 47,-7 C 51,-3 54,2 56,7 L 68,9 L 68,31 L 56,33 C 54,38 51,43 47,47 L 53,58 L 38,73 L 27,67 C 23,71 18,74 13,76 L 11,88 L -11,88 L -13,76 C -18,74 -23,71 -27,67 L -38,73 L -53,58 L -47,47 C -51,43 -54,38 -56,33 L -68,31 L -68,9 L -56,7 C -54,2 -51,-3 -47,-7 L -53,-18 L -38,-33 L -27,-27 C -23,-31 -18,-34 -13,-36 Z" transform="scale(0.65) translate(0,-20)"/>
+  </g>
+  <!-- Lightning bolt / service activation indicator -->
+  <path d="M 68 34 L 50 64 L 62 64 L 58 94 L 80 58 L 68 58 Z" fill="url(#bolt)"/>
+</svg>

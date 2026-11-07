@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.yemresolenci.CosmicSystemdManager</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>MIT</project_license>
+  <name>Systemd Manager</name>
+  <summary>Manage systemd services directly from the COSMIC panel</summary>
+  <description>
+    <p>A native libcosmic panel applet for the Pop!_OS COSMIC desktop environment that allows you to monitor, start, stop, and restart your favorite systemd services directly from your panel.</p>
+    <p>Features include:</p>
+    <ul>
+      <li>Real-time systemd service monitoring and control via D-Bus</li>
+      <li>Persistent pinned service list with custom aliases and labels</li>
+      <li>Automatic transition polling for services that auto-restart or take time to settle</li>
+      <li>Live autocomplete search across all installed and loaded system units</li>
+    </ul>
+  </description>
+  <provides>
+    <id>com.system76.CosmicApplet</id>
+  </provides>
+  <developer_name>Emre Sölenci</developer_name>
+  <url type="homepage">https://github.com/yemreSolenci/cosmic-systemd-manager</url>
+  <url type="bugtracker">https://github.com/yemreSolenci/cosmic-systemd-manager/issues</url>
+  <launchable type="desktop-id">io.github.yemresolenci.CosmicSystemdManager.desktop</launchable>
+  <releases>
+    <release version="0.1.0" date="2026-11-08">
+      <description>
+        <p>Initial release with live systemd monitoring, pin management, and search autocomplete.</p>
+      </description>
+    </release>
+  </releases>
+  <content_rating type="oars-1.1" />
+</component>

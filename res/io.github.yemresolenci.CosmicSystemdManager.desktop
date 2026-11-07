@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Systemd Manager
+Comment=Manage pinned systemd services from the panel
+Type=Application
+Exec=cosmic-systemd-applet
+Terminal=false
+Categories=COSMIC;System;
+Keywords=COSMIC;Applet;Systemd;Services;
+Icon=io.github.yemresolenci.CosmicSystemdManager
+NoDisplay=true
+X-CosmicApplet=true

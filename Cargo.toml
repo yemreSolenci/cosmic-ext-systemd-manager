@@ -1,0 +1,17 @@
+[package]
+name = "cosmic-systemd-applet"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# GUI / COSMIC components
+libcosmic = { git = "https://github.com/pop-os/libcosmic", features = ["applet", "wayland"] }
+
+# Async runtime
+tokio = { version = "1.30", features = ["rt-multi-thread", "macros", "time"] }
+
+# D-Bus interaction
+zbus = "4.0"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0.149"
+directories = "6.0.0"
