@@ -1,181 +1,200 @@
 # COSMIC Systemd Manager
 
-A native, highly polished `libcosmic` panel applet for the Pop!_OS COSMIC desktop environment that allows you to monitor and control your favorite `systemd` services directly from your top bar.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![COSMIC Desktop](https://img.shields.io/badge/COSMIC-Applet-blue.svg)](https://github.com/pop-os/libcosmic)
+[![Rust](https://img.shields.io/badge/Rust-2021%20Edition-orange.svg)](https://www.rust-lang.org/)
 
-Inspired by popular GNOME extensions, this applet provides a deeply integrated, lightning-fast UX for managing the daemons you care about without ever touching a terminal.
+A native, lightweight, and responsive `libcosmic` panel applet for the Pop!_OS COSMIC desktop environment that allows you to monitor and control your favorite `systemd` services directly from your panel.
+
+Inspired by popular GNOME extensions, this applet provides a deeply integrated, lightning-fast user experience for managing background daemons without opening a terminal.
 
 ---
 
 ## ✨ Features
 
-- **Real-Time D-Bus Integration**: Directly communicates with systemd over `zbus`, fetching live unit states and broadcasting start/stop/restart commands instantly.
-- **Persistent Pinned Services**: Don't scroll through 200 system units. Pin only the services you care about (like `docker.service` or `vban.service`). Configuration survives reboots, saved to `~/.config/systemdmanager/config.json`.
-- **Custom Aliases/Labels**: Rename ugly system unit IDs into clean, human-readable labels for your panel.
-- **Service Reordering**: Move your pinned services up and down inside the Manage view to fit your workflow.
-- **Live-Search Autocomplete**: Adding a new service? Just type a few letters and the applet will live-filter your system's unit registry, ensuring you only add valid targets.
-- **Destructive Action Protections**: Styled error messages, native duplicate checking, and confirmation flows prevent accidentally adding broken or duplicate services.
-- **Keyboard-Friendly**: Auto-focus on label input fields so you can navigate the entire flow without touching your mouse.
+- **⚡ Real-Time D-Bus Integration**: Directly communicates with `org.freedesktop.systemd1` over asynchronous D-Bus (`zbus`) without invoking external shell binaries or polling `systemctl` CLI tools.
+- **🔍 Full Unit Discovery (Loaded & Unloaded)**: Discovers both active/running services in memory and disabled/inactive `.service` unit files residing on disk (`/etc/systemd/system`, `/usr/lib/systemd/system`, etc.) — perfect for custom services like fan controllers (`fan100.service`, `nbfc.service`) or network daemons.
+- **🔄 Smart Transition & Auto-Restart Tracking**: Detects transitional states (`activating`, `deactivating`, `reloading`, `auto-restart`) and automatically polls until the service settles into its final operational state.
+- **📌 Persistent Pinned Services**: Keep your panel clean. Pin only the services you care about (e.g., `docker.service`, `vban.service`, `zapret.service`). Pinned services survive reboots and are saved to standard XDG user configuration.
+- **🏷️ Custom Aliases & Labels**: Rename cryptic system unit IDs into clean, friendly labels (e.g., rename `vban.service` to `VBAN Audio`).
+- **🔎 Relevance-Ranked Autocomplete Search**: Quickly find any installed system service. Searches both unit file names and embedded `Description=` fields, prioritizing prefix matches and excluding already pinned units.
+- **📐 Overflow-Proof Layout**: Single-line text truncation and intelligent vertical column alignment prevent long service names or statuses from overlapping toggles and buttons.
+- **🔒 Security-Hardened**: Built-in unit name validation prevents path traversal or unintended target activation (`.target` / `.mount`), enforces bounded file reads, and saves configuration with restrictive owner-only permissions (`0600`).
 
 ---
 
 ## 🚀 Installation
 
-### Prerequisites
+### Option 1: Install via COSMIC Store (Flatpak)
 
-Ensure you have the Rust toolchain installed. Install it via [rustup](https://rustup.rs) if needed:
+*Once published on the official COSMIC Flatpak repository:*
+1. Open **COSMIC Store**.
+2. Search for **Systemd Manager**.
+3. Click **Install**.
+4. Open **COSMIC Settings → Desktop → Panel → Add Applet** and add **Systemd Manager** to your top bar or dock.
+
+---
+
+### Option 2: Build from Source
+
+#### Prerequisites
+Ensure you have the Rust toolchain and development headers installed. On Pop!_OS / Ubuntu:
+
 ```bash
+# Rust toolchain
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+# System libraries and build utilities
+sudo apt install libwayland-dev libxkbcommon-dev libdbus-1-dev pkg-config just
 ```
 
-You will also need the development libraries for your distribution. On Pop!_OS / Ubuntu:
-```bash
-sudo apt install libwayland-dev libxkbcommon-dev libdbus-1-dev pkg-config
-```
-
-### 1. Clone and Build
-
+#### 1. Clone the Repository
 ```bash
 git clone https://github.com/yemreSolenci/cosmic-systemd-manager.git
 cd cosmic-systemd-manager
+```
+
+#### 2. Build and Install
+Using `just` (recommended for standard local installation):
+
+```bash
+# Install to ~/.local (no root required)
+just prefix=$HOME/.local install
+```
+
+*Or manually build with Cargo:*
+```bash
 cargo build --release
-```
+mkdir -p ~/.local/bin ~/.local/share/applications ~/.local/share/metainfo ~/.local/share/icons/hicolor/scalable/apps
 
-The compiled binary will be at `target/release/cosmic-systemd-applet`.
-
-### 2. Install the Binary
-
-Move it somewhere on your `$PATH`. The `~/.local/bin` directory is the standard user-local location:
-
-```bash
-mkdir -p ~/.local/bin
 cp target/release/cosmic-systemd-applet ~/.local/bin/
+cp res/io.github.yemresolenci.CosmicSystemdManager.desktop ~/.local/share/applications/
+cp res/io.github.yemresolenci.CosmicSystemdManager.metainfo.xml ~/.local/share/metainfo/
+cp res/icons/hicolor/scalable/apps/io.github.yemresolenci.CosmicSystemdManager.svg ~/.local/share/icons/hicolor/scalable/apps/
 ```
 
-Verify it is on your path (add to `~/.bashrc` or `~/.profile` if needed):
-```bash
-echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
-source ~/.bashrc
-```
+Ensure `~/.local/bin` is in your `$PATH` (e.g., in `~/.bashrc` or `~/.profile`).
 
-### 3. Register the Applet with COSMIC Panel
-
-COSMIC panel discovers applets through `.desktop` files with the `X-CosmicApplet=true` key. The file **must** be placed in a system-wide or user-level data directory.
-
-Create the desktop entry file:
-```bash
-mkdir -p ~/.local/share/applications/
-```
-
-Create `~/.local/share/applications/io.github.yemresolenci.CosmicSystemdManager.desktop` with the following content:
-
-```ini
-[Desktop Entry]
-Name=Systemd Manager
-Comment=Manage pinned systemd services from the panel
-Type=Application
-Exec=cosmic-systemd-applet
-Terminal=false
-Categories=COSMIC;System;
-Keywords=COSMIC;Applet;Systemd;Services;
-Icon=io.github.yemresolenci.CosmicSystemdManager
-NoDisplay=true
-X-CosmicApplet=true
-```
-
-> **Important**: The `Exec=` value must match the binary name as it appears on your `$PATH` (just `cosmic-systemd-applet`, not an absolute path). This is how COSMIC panel launches applets.
-
-> **Note**: The `NoDisplay=true` key hides the applet from the regular app launcher — it should only appear in the COSMIC Panel configuration interface, just like system applets.
-
-### 4. Add the Applet to Your Panel
-
-After creating the `.desktop` file, log out and back in (or restart `cosmic-panel`):
+#### 3. Register with COSMIC Panel
+Restart `cosmic-panel` to load newly registered applets:
 ```bash
 killall cosmic-panel
 ```
 
-Then go to **COSMIC Settings → Desktop → Panel → Add Applet** and you should see **"Systemd Manager"** in the list.
+Then navigate to **COSMIC Settings → Desktop → Panel → Add Applet** and add **Systemd Manager**.
 
 ---
 
-## 🔐 Polkit Permissions
+## 🔐 Polkit Authentication & Permissions
 
-By default, standard users are prompted for a password when starting or stopping **system-wide** systemd units (like `docker.service`). To make the panel applet seamless — no password popups on every click — configure a Polkit rule.
+When managing **system-wide** services (like `docker.service` or hardware controllers), systemd delegates authorization to **PolicyKit (Polkit)**.
 
-**Create the rule file:**
+### 1. Default Behavior (Zero Configuration Required)
+Out of the box, **no configuration is required**:
+- When you click a toggle to start, stop, or restart a system service, COSMIC's native **Polkit Authentication Agent** automatically opens a graphical password dialog.
+- Enter your user password, and the service transitions immediately.
+
+---
+
+### 2. Optional: 1-Click Passwordless Toggling (For Power Users)
+If you prefer toggles to flip instantaneously without typing your password each time, configure a single Polkit rule.
+
+Create the rule file:
 ```bash
-sudo nano /etc/polkit-1/rules.d/49-nopasswd-systemd.rules
+sudo nano /etc/polkit-1/rules.d/49-cosmic-systemd.rules
 ```
 
-**Paste the following** *(replace `YOUR_USERNAME` with your actual Linux username)*:
+#### Method A: Allow All Services for Admin Users (Easiest)
+Paste the following rule:
 ```javascript
 polkit.addRule(function(action, subject) {
     if (action.id == "org.freedesktop.systemd1.manage-units" &&
-        subject.user == "YOUR_USERNAME") {
+        subject.isInGroup("sudo")) {
         return polkit.Result.YES;
     }
 });
 ```
 
-Restart the polkit service to apply:
+#### Method B: Least-Privilege Allowlist (Recommended for Security)
+Restrict passwordless toggling strictly to a specific list of services you frequently manage:
+```javascript
+polkit.addRule(function(action, subject) {
+    var allowedUnits = [
+        "docker.service",
+        "vban.service",
+        "fan100.service",
+        "zapret.service"
+    ];
+    if (action.id == "org.freedesktop.systemd1.manage-units" &&
+        subject.isInGroup("sudo") &&
+        allowedUnits.indexOf(action.lookup("unit")) !== -1) {
+        return polkit.Result.YES;
+    }
+});
+```
+
+Apply the rule by restarting the Polkit daemon:
 ```bash
 sudo systemctl restart polkit
 ```
-
-> ⚠️ **Security Note**: The rule above grants your user password-less control over ALL systemd units. For a more restrictive, least-privilege setup, scope the rule to an explicit allowlist of units using `action.lookup("unit")`:
->
-> ```javascript
-> polkit.addRule(function(action, subject) {
->     var allowedUnits = ["docker.service", "vban.service"];
->     if (action.id == "org.freedesktop.systemd1.manage-units" &&
->         subject.user == "YOUR_USERNAME" &&
->         allowedUnits.indexOf(action.lookup("unit")) !== -1) {
->         return polkit.Result.YES;
->     }
-> });
-> ```
 
 ---
 
 ## ⚙️ Configuration
 
-Pinned services and their labels are automatically persisted to:
+Pinned services and their labels are automatically persisted according to the XDG specification:
+
 ```
-~/.config/systemdmanager/config.json
+~/.config/CosmicSystemdManager/config.json
 ```
 
-The format is a simple JSON array and can be hand-edited if needed:
+The configuration is saved as clean, human-readable JSON:
 ```json
 [
-  { "id": "docker.service", "label": "Docker" },
-  { "id": "vban.service",   "label": "VBAN Audio" }
+  {
+    "id": "docker.service",
+    "label": "Docker Daemon"
+  },
+  {
+    "id": "vban.service",
+    "label": "VBAN Audio Stream"
+  },
+  {
+    "id": "fan100.service",
+    "label": "Max Fan Speed"
+  }
 ]
 ```
+
+*(Note: If migrating from older versions, existing configuration files under legacy paths are automatically imported on first launch).*
 
 ---
 
 ## 🛠 Architecture & Tech Stack
 
-| Crate | Purpose |
-|---|---|
-| `libcosmic` | Declarative GUI, Wayland layer-shell protocol, panel applet lifecycle |
-| `zbus` | Async D-Bus communication with `org.freedesktop.systemd1` |
-| `tokio` | Async runtime |
-| `serde` + `serde_json` | Configuration serialization |
-| `directories` | XDG-compliant config path resolution |
+| Component | Technology | Purpose |
+|---|---|---|
+| **GUI Framework** | [`libcosmic`](https://github.com/pop-os/libcosmic) | Declarative UI, Wayland layer-shell protocol, native COSMIC widgets |
+| **D-Bus Engine** | [`zbus`](https://gitlab.freedesktop.org/dbus/zbus) | Non-blocking async communication with `org.freedesktop.systemd1` |
+| **Async Runtime** | [`tokio`](https://tokio.rs/) | Multi-threaded async task scheduling and transition timers |
+| **Serialization** | [`serde`](https://serde.rs/) & `serde_json` | Type-safe JSON serialization for pinned service configurations |
+| **XDG Directories**| [`directories`](https://crates.io/crates/directories) | Standardized XDG base directory resolution |
 
-### Module Structure
+### Source Layout
 
 ```
 src/
-├── main.rs      # Entry point — calls cosmic::applet::run
-├── app.rs       # Application state, message types, update logic
-├── ui.rs        # Pure declarative view functions per screen
-├── config.rs    # Load/save pinned services to disk
-└── systemd.rs   # D-Bus client for org.freedesktop.systemd1
+├── main.rs      # Applet entry point (cosmic::applet::run)
+├── app.rs       # Application state machine, message handling, background subscription
+├── ui.rs        # Declarative views: Main popup, Manage, Edit label, Confirm add
+├── systemd.rs   # Type-safe D-Bus client, unit file parser, transition wait loop
+└── config.rs    # XDG configuration loader and safe atomic writer
 ```
 
 ---
 
-## 📄 License
+## 🤝 Contributing & License
 
-This project is open-source and available under the [MIT License](LICENSE). Feel free to fork, extend, and contribute!
+Contributions, bug reports, and pull requests are warmly welcomed! Please ensure all PRs adhere to [Conventional Commits](https://www.conventionalcommits.org/).
+
+This project is licensed under the [MIT License](LICENSE).
