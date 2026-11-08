@@ -60,7 +60,7 @@ If you do not configure any Polkit rules, the applet still works out of the box.
 
 ## 🚀 Installation
 
-### Via COSMIC Store (Flatpak)
+### Option 1: Via COSMIC Store (Flatpak)
 *Once published on the official COSMIC repository:*
 1. Open **COSMIC Store**.
 2. Search for **Systemd Manager** and click **Install**.
@@ -68,12 +68,23 @@ If you do not configure any Polkit rules, the applet still works out of the box.
 
 ---
 
-### Build from Source
+### Option 2: Precompiled Binary (Quick Install)
+Download the latest `cosmic-systemd-applet-v0.1.0-x86_64-linux.tar.gz` from the [Releases](https://github.com/yemreSolenci/cosmic-systemd-manager/releases) page:
+```bash
+tar -xzf cosmic-systemd-applet-v0.1.0-x86_64-linux.tar.gz
+cd cosmic-systemd-applet-v0.1.0-x86_64-linux
+./install.sh
+killall cosmic-panel
+```
+
+---
+
+### Option 3: Build from Source
 
 #### Prerequisites
 ```bash
 # On Pop!_OS / Ubuntu
-sudo apt install libwayland-dev libxkbcommon-dev libdbus-1-dev pkg-config just
+sudo apt install libwayland-dev libxkbcommon-dev libdbus-1-dev pkg-config
 ```
 
 #### Build and Install
@@ -81,12 +92,17 @@ sudo apt install libwayland-dev libxkbcommon-dev libdbus-1-dev pkg-config just
 git clone https://github.com/yemreSolenci/cosmic-systemd-manager.git
 cd cosmic-systemd-manager
 
-# Install to ~/.local (no sudo required)
-just prefix=$HOME/.local install
+cargo build --release
+mkdir -p ~/.local/bin ~/.local/share/applications ~/.local/share/metainfo ~/.local/share/icons/hicolor/scalable/apps
+cp target/release/cosmic-systemd-applet ~/.local/bin/
+cp res/io.github.yemresolenci.CosmicSystemdManager.desktop ~/.local/share/applications/
+cp res/io.github.yemresolenci.CosmicSystemdManager.metainfo.xml ~/.local/share/metainfo/
+cp res/icons/hicolor/scalable/apps/io.github.yemresolenci.CosmicSystemdManager.svg ~/.local/share/icons/hicolor/scalable/apps/
 
 # Reload panel
 killall cosmic-panel
 ```
+*(Tip: If you have `just` installed, you can simply run `just prefix=$HOME/.local install`)*
 Then navigate to **COSMIC Settings → Desktop → Panel → Add Applet** and add **Systemd Manager**.
 
 ---
