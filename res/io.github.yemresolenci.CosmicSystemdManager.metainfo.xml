@@ -19,7 +19,7 @@
     <id>com.system76.CosmicApplet</id>
   </provides>
   <developer id="io.github.yemresolenci">
-    <name>Emre Sölenci</name>
+    <name>Yunus Emre Solenci</name>
   </developer>
   <url type="homepage">https://github.com/yemreSolenci/cosmic-systemd-manager</url>
   <url type="bugtracker">https://github.com/yemreSolenci/cosmic-systemd-manager/issues</url>
