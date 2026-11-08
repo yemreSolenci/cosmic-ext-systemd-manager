@@ -1,23 +1,27 @@
 {
-  "app-id": "io.github.yemresolenci.CosmicSystemdManager",
+  "id": "io.github.yemresolenci.CosmicSystemdManager",
   "runtime": "org.freedesktop.Platform",
-  "runtime-version": "24.08",
+  "runtime-version": "25.08",
+  "base": "com.system76.Cosmic.BaseApp",
+  "base-version": "stable",
   "sdk": "org.freedesktop.Sdk",
   "sdk-extensions": [
     "org.freedesktop.Sdk.Extension.rust-stable"
   ],
   "command": "cosmic-systemd-applet",
   "finish-args": [
-    "--socket=wayland",
-    "--socket=fallback-x11",
     "--share=ipc",
-    "--system-talk-name=org.freedesktop.systemd1",
-    "--filesystem=xdg-config/CosmicSystemdManager:create"
+    "--socket=wayland",
+    "--device=dri",
+    "--filesystem=xdg-config/cosmic:rw",
+    "--filesystem=xdg-config/CosmicSystemdManager:create",
+    "--talk-name=com.system76.CosmicSettingsDaemon",
+    "--system-talk-name=org.freedesktop.systemd1"
   ],
   "build-options": {
     "append-path": "/usr/lib/sdk/rust-stable/bin",
     "env": {
-      "CARGO_HOME": "/run/build/cargo"
+      "CARGO_HOME": "/run/build/cosmic-systemd-applet/cargo"
     }
   },
   "modules": [
@@ -25,15 +29,19 @@
       "name": "cosmic-systemd-applet",
       "buildsystem": "simple",
       "build-commands": [
+        "cargo --offline fetch --manifest-path Cargo.toml --verbose",
         "cargo --offline build --release --verbose",
-        "just rootdir=/app prefix= install"
+        "install -Dm0755 target/release/cosmic-systemd-applet /app/bin/cosmic-systemd-applet",
+        "install -Dm0644 res/io.github.yemresolenci.CosmicSystemdManager.desktop /app/share/applications/io.github.yemresolenci.CosmicSystemdManager.desktop",
+        "install -Dm0644 res/io.github.yemresolenci.CosmicSystemdManager.metainfo.xml /app/share/metainfo/io.github.yemresolenci.CosmicSystemdManager.metainfo.xml",
+        "install -Dm0644 res/icons/hicolor/scalable/apps/io.github.yemresolenci.CosmicSystemdManager.svg /app/share/icons/hicolor/scalable/apps/io.github.yemresolenci.CosmicSystemdManager.svg"
       ],
       "sources": [
         {
           "type": "git",
           "url": "https://github.com/yemreSolenci/cosmic-systemd-manager.git",
           "tag": "v0.1.0",
-          "commit": "875b2416f4dfe07092ab60183f7f232b938350fa"
+          "commit": "46421ff0799c45d88026197950f778dd8d12610b"
         },
         "cargo-sources.json"
       ]
