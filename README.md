@@ -3,7 +3,6 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![COSMIC Desktop](https://img.shields.io/badge/COSMIC-Applet-blue.svg)](https://github.com/pop-os/libcosmic)
 [![Rust](https://img.shields.io/badge/Rust-2021%20Edition-orange.svg)](https://www.rust-lang.org/)
-[![AI Powered](https://img.shields.io/badge/AI-Powered-8A2BE2.svg)](#)
 
 A native, lightweight, and responsive `libcosmic` panel applet for the Pop!_OS COSMIC desktop environment to monitor and control `systemd` services directly from your panel.
 
@@ -105,4 +104,4 @@ Pinned services are saved in standard XDG JSON format at:
 
 This project is licensed under the [MIT License](LICENSE).
 
-<p align="center"><sub>🤖 <i>AI-powered development with modern Rust and libcosmic.</i></sub></p>
+<p align="center"><sub>🤖 <i>Developed with AI assistance using modern Rust and libcosmic.</i></sub></p>
