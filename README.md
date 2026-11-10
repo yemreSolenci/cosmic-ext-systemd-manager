@@ -6,6 +6,10 @@
 
 A native, lightweight, and responsive `libcosmic` panel applet for the Pop!_OS COSMIC desktop environment to monitor and control `systemd` services directly from your panel.
 
+<p align="center">
+  <img src="assets/demo.gif" alt="COSMIC Systemd Manager Demo" width="500" />
+</p>
+
 ---
 
 ## ✨ Features
@@ -16,6 +20,12 @@ A native, lightweight, and responsive `libcosmic` panel applet for the Pop!_OS C
 - **📌 Pinned Services & Custom Labels**: Pin only your essential services and give them friendly aliases (e.g. `VBAN Audio` instead of `vban.service`).
 - **🔎 Quick Search**: Live autocomplete search across all available services by name and description.
 - **📐 Clean Layout**: Responsive layout with automatic text truncation prevents labels from overflowing panel popups.
+
+<p align="center">
+  <img src="assets/demo_service_add.gif" alt="Searching and Pinning Services Demo" width="450" />
+  <br>
+  <em>Live search autocomplete and 1-click service pinning.</em>
+</p>
 
 ---
 
