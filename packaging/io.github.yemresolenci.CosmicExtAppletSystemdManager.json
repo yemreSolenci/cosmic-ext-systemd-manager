@@ -41,7 +41,7 @@
           "type": "git",
           "url": "https://github.com/yemreSolenci/cosmic-ext-systemd-manager.git",
           "tag": "v0.1.0",
-          "commit": "46421ff0799c45d88026197950f778dd8d12610b"
+          "commit": "38d4421f5a90284a36ed35baa223afcc4035b111"
         },
         "cargo-sources.json"
       ]
