@@ -484,10 +484,14 @@ impl Application for SystemdApplet {
 
     fn view(&self) -> Element<'_, Message> {
         let have_popup = self.popup;
+        let mut icon = cosmic::widget::icon::from_svg_bytes(include_bytes!(
+            "../res/icons/hicolor/symbolic/apps/io.github.yemresolenci.CosmicExtAppletSystemdManager-symbolic.svg"
+        ));
+        icon.symbolic = true;
         let btn = self
             .core
             .applet
-            .icon_button("preferences-system-symbolic")
+            .icon_button_from_handle(icon)
             .on_press_with_rectangle(move |offset, bounds| {
                 if let Some(id) = have_popup {
                     Message::ClosePopupAndReset(id)

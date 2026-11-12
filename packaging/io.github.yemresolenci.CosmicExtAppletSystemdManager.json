@@ -34,7 +34,8 @@
         "install -Dm0755 target/release/cosmic-ext-applet-systemd-manager /app/bin/cosmic-ext-applet-systemd-manager",
         "install -Dm0644 res/io.github.yemresolenci.CosmicExtAppletSystemdManager.desktop /app/share/applications/io.github.yemresolenci.CosmicExtAppletSystemdManager.desktop",
         "install -Dm0644 res/io.github.yemresolenci.CosmicExtAppletSystemdManager.metainfo.xml /app/share/metainfo/io.github.yemresolenci.CosmicExtAppletSystemdManager.metainfo.xml",
-        "install -Dm0644 res/icons/hicolor/scalable/apps/io.github.yemresolenci.CosmicExtAppletSystemdManager.svg /app/share/icons/hicolor/scalable/apps/io.github.yemresolenci.CosmicExtAppletSystemdManager.svg"
+        "install -Dm0644 res/icons/hicolor/scalable/apps/io.github.yemresolenci.CosmicExtAppletSystemdManager.svg /app/share/icons/hicolor/scalable/apps/io.github.yemresolenci.CosmicExtAppletSystemdManager.svg",
+        "install -Dm0644 res/icons/hicolor/symbolic/apps/io.github.yemresolenci.CosmicExtAppletSystemdManager-symbolic.svg /app/share/icons/hicolor/symbolic/apps/io.github.yemresolenci.CosmicExtAppletSystemdManager-symbolic.svg"
       ],
       "sources": [
         {

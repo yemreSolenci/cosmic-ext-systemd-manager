@@ -20,9 +20,11 @@ install:
     install -Dm0644 "res/{{app-id}}.desktop" "{{datadir}}/applications/{{app-id}}.desktop"
     install -Dm0644 "res/{{app-id}}.metainfo.xml" "{{datadir}}/metainfo/{{app-id}}.metainfo.xml"
     install -Dm0644 "res/icons/hicolor/scalable/apps/{{app-id}}.svg" "{{datadir}}/icons/hicolor/scalable/apps/{{app-id}}.svg"
+    install -Dm0644 "res/icons/hicolor/symbolic/apps/{{app-id}}-symbolic.svg" "{{datadir}}/icons/hicolor/symbolic/apps/{{app-id}}-symbolic.svg"
 
 uninstall:
     rm -f "{{bindir}}/{{bin-name}}"
     rm -f "{{datadir}}/applications/{{app-id}}.desktop"
     rm -f "{{datadir}}/metainfo/{{app-id}}.metainfo.xml"
     rm -f "{{datadir}}/icons/hicolor/scalable/apps/{{app-id}}.svg"
+    rm -f "{{datadir}}/icons/hicolor/symbolic/apps/{{app-id}}-symbolic.svg"
