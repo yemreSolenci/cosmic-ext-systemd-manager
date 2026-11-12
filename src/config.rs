@@ -16,12 +16,12 @@ pub struct PinnedService {
 }
 
 pub fn get_config_path() -> Option<PathBuf> {
-    directories::ProjectDirs::from("io", "github.yemresolenci", "CosmicSystemdManager")
+    directories::ProjectDirs::from("io", "github.yemresolenci", "CosmicExtAppletSystemdManager")
         .map(|proj_dirs| proj_dirs.config_dir().join("config.json"))
 }
 
 fn get_legacy_config_path() -> Option<PathBuf> {
-    directories::ProjectDirs::from("com", "system76", "SystemdManager")
+    directories::ProjectDirs::from("io", "github.yemresolenci", "CosmicSystemdManager")
         .map(|proj_dirs| proj_dirs.config_dir().join("config.json"))
 }
 

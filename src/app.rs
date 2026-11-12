@@ -136,7 +136,7 @@ impl Application for SystemdApplet {
     type Message = Message;
     type Flags = ();
 
-    const APP_ID: &'static str = "io.github.yemresolenci.CosmicSystemdManager";
+    const APP_ID: &'static str = "io.github.yemresolenci.CosmicExtAppletSystemdManager";
 
     fn core(&self) -> &Core {
         &self.core

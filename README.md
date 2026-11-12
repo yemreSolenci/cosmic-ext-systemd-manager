@@ -1,13 +1,13 @@
-# COSMIC Systemd Manager
+# Systemd Manager for the COSMIC™ desktop
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![COSMIC Desktop](https://img.shields.io/badge/COSMIC-Applet-blue.svg)](https://github.com/pop-os/libcosmic)
+[![COSMIC™ Desktop](https://img.shields.io/badge/COSMIC™-Applet-blue.svg)](https://github.com/pop-os/libcosmic)
 [![Rust](https://img.shields.io/badge/Rust-2021%20Edition-orange.svg)](https://www.rust-lang.org/)
 
-A native, lightweight, and responsive `libcosmic` panel applet for the Pop!_OS COSMIC desktop environment to monitor and control `systemd` services directly from your panel.
+A native, lightweight, and responsive `libcosmic` panel applet for the COSMIC™ desktop environment to monitor and control `systemd` services directly from your panel.
 
 <p align="center">
-  <img src="assets/demo.gif" alt="COSMIC Systemd Manager Demo" width="500" />
+  <img src="assets/demo.gif" alt="Systemd Manager Demo" width="500" />
 </p>
 
 ---
@@ -70,19 +70,19 @@ If you do not configure any Polkit rules, the applet still works out of the box.
 
 ## 🚀 Installation
 
-### Option 1: Via COSMIC Store (Flatpak)
-*Once published on the official COSMIC repository:*
-1. Open **COSMIC Store**.
+### Option 1: Via COSMIC App Store (Flatpak)
+*Available once merged into the official COSMIC Flatpak repository:*
+1. Open **COSMIC App Store**.
 2. Search for **Systemd Manager** and click **Install**.
 3. Open **COSMIC Settings → Desktop → Panel → Add Applet** and add it to your panel.
 
 ---
 
 ### Option 2: Precompiled Binary (Quick Install)
-Download the latest `cosmic-systemd-applet-v0.1.0-x86_64-linux.tar.gz` from the [Releases](https://github.com/yemreSolenci/cosmic-systemd-manager/releases) page:
+Download the latest `cosmic-ext-applet-systemd-manager-v0.1.0-x86_64-linux.tar.gz` from the [Releases](https://github.com/yemreSolenci/cosmic-ext-systemd-manager/releases) page:
 ```bash
-tar -xzf cosmic-systemd-applet-v0.1.0-x86_64-linux.tar.gz
-cd cosmic-systemd-applet-v0.1.0-x86_64-linux
+tar -xzf cosmic-ext-applet-systemd-manager-v0.1.0-x86_64-linux.tar.gz
+cd cosmic-ext-applet-systemd-manager-v0.1.0-x86_64-linux
 ./install.sh
 killall cosmic-panel
 ```
@@ -99,15 +99,15 @@ sudo apt install libwayland-dev libxkbcommon-dev libdbus-1-dev pkg-config
 
 #### Build and Install
 ```bash
-git clone https://github.com/yemreSolenci/cosmic-systemd-manager.git
-cd cosmic-systemd-manager
+git clone https://github.com/yemreSolenci/cosmic-ext-systemd-manager.git
+cd cosmic-ext-systemd-manager
 
 cargo build --release
 mkdir -p ~/.local/bin ~/.local/share/applications ~/.local/share/metainfo ~/.local/share/icons/hicolor/scalable/apps
-cp target/release/cosmic-systemd-applet ~/.local/bin/
-cp res/io.github.yemresolenci.CosmicSystemdManager.desktop ~/.local/share/applications/
-cp res/io.github.yemresolenci.CosmicSystemdManager.metainfo.xml ~/.local/share/metainfo/
-cp res/icons/hicolor/scalable/apps/io.github.yemresolenci.CosmicSystemdManager.svg ~/.local/share/icons/hicolor/scalable/apps/
+cp target/release/cosmic-ext-applet-systemd-manager ~/.local/bin/
+cp res/io.github.yemresolenci.CosmicExtAppletSystemdManager.desktop ~/.local/share/applications/
+cp res/io.github.yemresolenci.CosmicExtAppletSystemdManager.metainfo.xml ~/.local/share/metainfo/
+cp res/icons/hicolor/scalable/apps/io.github.yemresolenci.CosmicExtAppletSystemdManager.svg ~/.local/share/icons/hicolor/scalable/apps/
 
 # Reload panel
 killall cosmic-panel
@@ -121,13 +121,15 @@ Then navigate to **COSMIC Settings → Desktop → Panel → Add Applet** and ad
 
 Pinned services are saved in standard XDG JSON format at:
 ```
-~/.config/CosmicSystemdManager/config.json
+~/.config/CosmicExtAppletSystemdManager/config.json
 ```
 
 ---
 
-## 📄 License
+## 📄 License & Trademark Notice
 
 This project is licensed under the [MIT License](LICENSE).
+
+*COSMIC™ is a trademark of System76, Inc. This project is an independent community project and is not affiliated with, endorsed by, or sponsored by System76.*
 
 <p align="center"><sub>🤖 <i>Developed with AI assistance using modern Rust and libcosmic.</i></sub></p>

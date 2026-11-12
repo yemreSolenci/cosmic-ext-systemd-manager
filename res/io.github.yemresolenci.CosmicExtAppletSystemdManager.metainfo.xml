@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
-  <id>io.github.yemresolenci.CosmicSystemdManager</id>
+  <id>io.github.yemresolenci.CosmicExtAppletSystemdManager</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>MIT</project_license>
   <name>Systemd Manager</name>
-  <summary>Manage systemd services directly from the COSMIC panel</summary>
+  <summary>Manage systemd services for the COSMIC™ desktop</summary>
   <description>
-    <p>A native libcosmic panel applet for the Pop!_OS COSMIC desktop environment that allows you to monitor, start, stop, and restart your favorite systemd services directly from your panel.</p>
+    <p>A native libcosmic panel applet for the COSMIC™ desktop environment that allows you to monitor, start, stop, and restart systemd services directly from your panel.</p>
     <p>Features include:</p>
     <ul>
       <li>Real-time systemd service monitoring and control via D-Bus</li>
@@ -21,9 +21,9 @@
   <developer id="io.github.yemresolenci">
     <name>Yunus Emre Solenci</name>
   </developer>
-  <url type="homepage">https://github.com/yemreSolenci/cosmic-systemd-manager</url>
-  <url type="bugtracker">https://github.com/yemreSolenci/cosmic-systemd-manager/issues</url>
-  <launchable type="desktop-id">io.github.yemresolenci.CosmicSystemdManager.desktop</launchable>
+  <url type="homepage">https://github.com/yemreSolenci/cosmic-ext-systemd-manager</url>
+  <url type="bugtracker">https://github.com/yemreSolenci/cosmic-ext-systemd-manager/issues</url>
+  <launchable type="desktop-id">io.github.yemresolenci.CosmicExtAppletSystemdManager.desktop</launchable>
   <releases>
     <release version="0.1.0" date="2026-11-08">
       <description>
